@@ -119,6 +119,34 @@
   fill: oklch(1 0 0 / 8%);
 }
 
+/* Scrollbar elegante e fina */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.5 0 0 / 40%) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: oklch(0.5 0 0 / 30%);
+  border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: oklch(0.5 0 0 / 50%);
+}
+.dark .scrollbar-thin {
+  scrollbar-color: oklch(0.7 0 0 / 30%) transparent;
+}
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: oklch(0.7 0 0 / 25%);
+}
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: oklch(0.7 0 0 / 45%);
+}
+
 /* UX: respeita quem prefere menos movimento (transições do framer-motion viram instantâneas) */
 @media (prefers-reduced-motion: reduce) {
   *,

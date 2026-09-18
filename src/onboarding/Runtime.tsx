@@ -226,7 +226,7 @@ export function Runtime({ device = "auto" }: { device?: "auto" | "mobile" | "des
                 noValidate
               >
                 {mobilePreview ? (
-                  <div className="min-h-0 flex-1 overflow-y-auto">
+                  <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-1 scrollbar-thin">
                     {step.fields.map((f, fi) => (
                       <FieldControl key={f.id} f={f} fi={fi} control={control} clearErrors={clearErrors} ob={ob} />
                     ))}
