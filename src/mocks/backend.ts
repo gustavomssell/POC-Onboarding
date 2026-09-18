@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type { OnboardingConfig, Values } from "../onboarding/types";
 import { uid } from "../lib/utils";
+import { seedOnboardings } from "./seed";
 
 const LS_CONFIG = "poc-onboarding-config";
 const LS_DRAFT = "poc-onboarding-draft";
@@ -74,6 +75,12 @@ function readCollection(): OnboardingConfig[] {
 
 function writeCollection(configs: OnboardingConfig[]): void {
   localStorage.setItem(LS_COLLECTION, JSON.stringify(configs));
+}
+
+export function initSeededCollection(): void {
+  if (localStorage.getItem(LS_COLLECTION) !== null) return;
+  if (localStorage.getItem(LS_CONFIG) !== null) return;
+  writeCollection(seedOnboardings);
 }
 
 function requireConfig(configs: OnboardingConfig[], id: string): OnboardingConfig {

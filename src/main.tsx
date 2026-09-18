@@ -4,6 +4,9 @@ import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './router.tsx'
 import { ThemeProvider } from './theme/ThemeProvider.tsx'
+import { initSeededCollection } from './mocks/backend'
+
+initSeededCollection()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

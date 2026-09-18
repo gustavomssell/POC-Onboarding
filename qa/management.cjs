@@ -6,6 +6,7 @@ const DEFAULT_ID = 'onboarding-poc-v1';
 const COLLECTION = 'poc-onboardings';
 const draftKey = (id) => `poc-onboarding-draft:${id}`;
 const editorPath = (id, mode = 'campos') => `/onboardings/${encodeURIComponent(id)}/${mode}`;
+const SEED_COUNT = 3;
 const collection = (page) => page.evaluate((key) => JSON.parse(localStorage.getItem(key)), COLLECTION);
 const goto = (page, path) => page.goto(new URL(path, BASE).href, { waitUntil: 'networkidle' });
 const assertPath = async (page, path) => {
@@ -71,9 +72,9 @@ const assertMode = async (page, id, mode) => {
       await openList(page);
       assert.equal(await page.getByTestId('list-page').isVisible(), true);
       const initial = await collection(page);
-      assert.equal(initial.length, 1);
-      assert.equal(initial[0].id, DEFAULT_ID);
-      const template = initial[0];
+      assert.equal(initial.length, SEED_COUNT);
+      const template = initial.find((c) => c.id === DEFAULT_ID);
+      assert.ok(template, 'default onboarding must exist in seed');
       const create = async (title) => {
         await openCreate(page);
         await page.getByTestId('create-onboarding-title').fill(title);
@@ -92,7 +93,7 @@ const assertMode = async (page, id, mode) => {
       assert.notEqual(first, second);
       assert.notEqual(first, DEFAULT_ID);
       assert.notEqual(second, DEFAULT_ID);
-      assert.equal((await collection(page)).length, 3);
+      assert.equal((await collection(page)).length, SEED_COUNT + 2);
       await page.getByTestId('onboarding-title').fill('QA Jornada B renomeada');
       await page.getByTestId('editor-save').click();
       await page.getByText('Alterações salvas.', { exact: true }).waitFor();

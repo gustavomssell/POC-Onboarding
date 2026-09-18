@@ -1,0 +1,303 @@
+import type { OnboardingConfig } from "../onboarding/types";
+
+export const seedOnboardings: OnboardingConfig[] = [
+  {
+    id: "onboarding-poc-v1",
+    version: 6,
+    title: "Crie sua conta",
+    steps: [
+      {
+        id: "welcome",
+        title: "Boas-vindas",
+        description: "Para começar, nos diga quem você é.",
+        desktopColumns: 1,
+        fields: [
+          {
+            id: "account_kind",
+            type: "buttons",
+            label: "Você é",
+            required: true,
+            options: [
+              { value: "pf", label: "Pessoa física" },
+              { value: "pj", label: "Empresa (PJ)" },
+            ],
+            desktopSpan: 12,
+          },
+        ],
+      },
+      {
+        id: "account",
+        title: "Conta",
+        description: "Dados básicos de acesso.",
+        desktopColumns: 2,
+        fields: [
+          { id: "account_head", type: "heading", label: "Dados básicos", desktopSpan: 12, content: "Usados para criar seu acesso." },
+          { id: "name", type: "text", label: "Nome completo", placeholder: "Ex.: Maria Silva", required: true, desktopSpan: 6 },
+          { id: "email", type: "email", label: "E-mail", placeholder: "voce@empresa.com", required: true, desktopSpan: 6 },
+          { id: "password", type: "password", label: "Senha", placeholder: "Mín. 8 caracteres", required: true, desktopSpan: 6, minLength: 8 },
+          { id: "phone", type: "tel", label: "Celular / WhatsApp", placeholder: "(11) 99999-9999", required: true, desktopSpan: 6 },
+          { id: "cpf", type: "document", label: "CPF", placeholder: "000.000.000-00", help: "Máscara automática de CPF/CNPJ.", required: true, desktopSpan: 6, showIf: { field: "account_kind", equals: "pf" } },
+          { id: "company", type: "text", label: "Razão social", placeholder: "Ex.: Acme LTDA", required: true, desktopSpan: 6, showIf: { field: "account_kind", equals: "pj" } },
+          { id: "cnpj", type: "text", label: "CNPJ", placeholder: "00.000.000/0001-00", desktopSpan: 6, showIf: { field: "account_kind", equals: "pj" } },
+        ],
+      },
+      {
+        id: "profile",
+        title: "Perfil",
+        description: "Conte um pouco sobre você.",
+        desktopColumns: 2,
+        fields: [
+          {
+            id: "goal",
+            type: "buttons",
+            label: "Qual seu principal objetivo?",
+            required: true,
+            options: [
+              { value: "aprender", label: "Aprender algo novo" },
+              { value: "networking", label: "Fazer networking" },
+              { value: "negocios", label: "Gerar negócios" },
+            ],
+            desktopSpan: 12,
+          },
+          { id: "birth", type: "date", label: "Data de nascimento", desktopSpan: 6 },
+          {
+            id: "role",
+            type: "select",
+            label: "Seu papel",
+            required: true,
+            options: [
+              { value: "dev", label: "Dev" },
+              { value: "design", label: "Design" },
+              { value: "pm", label: "Produto" },
+              { value: "outro", label: "Outro" },
+            ],
+            desktopSpan: 6,
+          },
+          { id: "bio", type: "textarea", label: "Bio curta", placeholder: "O que você faz, em 1–2 frases…", desktopSpan: 12 },
+        ],
+      },
+      {
+        id: "address",
+        title: "Endereço",
+        description: "Usamos o CEP para preencher a cidade/UF (mock).",
+        desktopColumns: 3,
+        fields: [
+          { id: "cep", type: "text", label: "CEP", placeholder: "01310-100", required: true, desktopSpan: 4 },
+          { id: "city", type: "text", label: "Cidade", placeholder: "São Paulo", desktopSpan: 4 },
+          {
+            id: "uf",
+            type: "select",
+            label: "UF",
+            options: [
+              { value: "SP", label: "SP" },
+              { value: "RJ", label: "RJ" },
+              { value: "MG", label: "MG" },
+              { value: "RS", label: "RS" },
+              { value: "PR", label: "PR" },
+              { value: "BA", label: "BA" },
+            ],
+            desktopSpan: 4,
+          },
+          { id: "street", type: "text", label: "Rua / Avenida", placeholder: "Av. Paulista", desktopSpan: 8 },
+          { id: "number", type: "number", label: "Número", placeholder: "1000", desktopSpan: 4 },
+        ],
+      },
+      {
+        id: "prefs",
+        title: "Preferências",
+        description: "Personalize sua experiência.",
+        desktopColumns: 1,
+        skippable: true,
+        fields: [
+          {
+            id: "interests",
+            type: "chips",
+            label: "Temas de interesse",
+            options: [
+              { value: "ia", label: "IA" },
+              { value: "mobile", label: "Mobile" },
+              { value: "ux", label: "UX" },
+              { value: "dados", label: "Dados" },
+              { value: "cloud", label: "Cloud" },
+            ],
+            desktopSpan: 12,
+          },
+          { id: "newsletter", type: "switch", label: "Receber novidades por e-mail", defaultValue: true, desktopSpan: 12 },
+          {
+            id: "frequency",
+            type: "radio",
+            label: "Frequência",
+            options: [
+              { value: "daily", label: "Diária" },
+              { value: "weekly", label: "Semanal" },
+              { value: "monthly", label: "Mensal" },
+            ],
+            desktopSpan: 12,
+          },
+        ],
+      },
+      {
+        id: "plan",
+        title: "Plano",
+        description: "Escolha como começar.",
+        desktopColumns: 1,
+        fields: [
+          {
+            id: "plan_kind",
+            type: "radio",
+            label: "Plano",
+            required: true,
+            options: [
+              { value: "free", label: "Free — para testar" },
+              { value: "pro", label: "Pro — R$ 49/mês" },
+              { value: "enterprise", label: "Enterprise — fale com a gente" },
+            ],
+            desktopSpan: 12,
+          },
+          { id: "seats", type: "integer", label: "Nº de assentos", placeholder: "10", desktopSpan: 6, showIf: { field: "plan_kind", equals: "enterprise" } },
+          { id: "expected_revenue", type: "currency", label: "Faturamento mensal (R$)", placeholder: "0,00", desktopSpan: 6, showIf: { field: "plan_kind", equals: "enterprise" } },
+          { id: "discount_goal", type: "percent", label: "Desconto desejado (%)", placeholder: "0", desktopSpan: 6, showIf: { field: "plan_kind", equals: "enterprise" } },
+          { id: "lgpd", type: "checkbox", label: "Li e aceito a Política de Privacidade para criar minha conta", required: true, desktopSpan: 12 },
+        ],
+      },
+    ],
+    edges: [
+      { id: "e_welcome_account", from: "welcome", to: "account" },
+      { id: "e_account_profile", from: "account", to: "profile" },
+      { id: "e_profile_address", from: "profile", to: "address" },
+      { id: "e_address_prefs", from: "address", to: "prefs" },
+      { id: "e_prefs_plan", from: "prefs", to: "plan" },
+    ],
+    positions: {
+      welcome: { x: 220, y: 0 },
+      account: { x: 220, y: 150 },
+      profile: { x: 220, y: 300 },
+      address: { x: 220, y: 450 },
+      prefs: { x: 220, y: 600 },
+      plan: { x: 220, y: 750 },
+    },
+  },
+  {
+    id: "onboarding_96rmaxpge",
+    version: 2,
+    title: "Teste MCP — jornadas por interesse",
+    steps: [
+      {
+        id: "interests",
+        title: "Interesses",
+        fields: [
+          {
+            id: "interests",
+            type: "multiselect",
+            label: "Escolha seus interesses",
+            required: true,
+            options: [
+              { value: "tech", label: "Tecnologia" },
+              { value: "design", label: "Design" },
+              { value: "business", label: "Negócios" },
+            ],
+          },
+        ],
+      },
+      {
+        id: "tech",
+        title: "Trilha Técnica",
+        fields: [{ id: "tech_detail", type: "text", label: "Qual área de tech?", required: true }],
+      },
+      {
+        id: "design",
+        title: "Trilha de Design",
+        fields: [{ id: "design_detail", type: "text", label: "Qual área de design?", required: true }],
+      },
+      {
+        id: "business",
+        title: "Trilha de Negócios",
+        fields: [{ id: "business_detail", type: "text", label: "Qual área de negócios?", required: true }],
+      },
+      {
+        id: "final",
+        title: "Final",
+        fields: [{ id: "accept", type: "checkbox", label: "Confirmo meus dados", required: true }],
+      },
+    ],
+    edges: [
+      { id: "interests-tech", from: "interests", to: "tech", when: { field: "interests", equals: "tech" } },
+      { id: "interests-design", from: "interests", to: "design", when: { field: "interests", equals: "design" } },
+      { id: "interests-business", from: "interests", to: "business", when: { field: "interests", equals: "business" } },
+      { id: "tech-final", from: "tech", to: "final" },
+      { id: "design-final", from: "design", to: "final" },
+      { id: "business-final", from: "business", to: "final" },
+    ],
+    positions: {
+      interests: { x: 350, y: 50 },
+      tech: { x: 100, y: 250 },
+      design: { x: 350, y: 250 },
+      business: { x: 600, y: 250 },
+      final: { x: 350, y: 450 },
+    },
+  },
+  {
+    id: "onboarding_f22nugkxn",
+    version: 3,
+    title: "Onboarding com Fluxo Condicional",
+    steps: [
+      {
+        id: "welcome",
+        title: "Quem é você?",
+        description: "Escolha seu perfil para personalizar a experiência.",
+        desktopColumns: 1,
+        fields: [
+          {
+            id: "account_kind",
+            type: "buttons",
+            label: "Você é",
+            required: true,
+            options: [
+              { value: "pf", label: "Pessoa física" },
+              { value: "pj", label: "Empresa (PJ)" },
+            ],
+            desktopSpan: 12,
+          },
+        ],
+      },
+      {
+        id: "pf_data",
+        title: "Dados Pessoais",
+        description: "Para pessoa física.",
+        desktopColumns: 1,
+        fields: [
+          { id: "cpf", type: "document", label: "CPF", placeholder: "000.000.000-00", required: true, desktopSpan: 12 },
+        ],
+      },
+      {
+        id: "pj_data",
+        title: "Dados Empresa",
+        description: "Para empresa.",
+        desktopColumns: 1,
+        fields: [
+          { id: "company", type: "text", label: "Razão social", placeholder: "Acme LTDA", required: true, desktopSpan: 12 },
+          { id: "cnpj", type: "text", label: "CNPJ", placeholder: "00.000.000/0001-00", required: true, desktopSpan: 12 },
+        ],
+      },
+      {
+        id: "finish",
+        title: "Concluído",
+        description: "Pronto!",
+        desktopColumns: 1,
+        fields: [],
+      },
+    ],
+    edges: [
+      { id: "e1", from: "welcome", to: "pf_data", when: { field: "account_kind", equals: "pf" } },
+      { id: "e2", from: "welcome", to: "pj_data", when: { field: "account_kind", equals: "pj" } },
+      { id: "e3", from: "pf_data", to: "finish" },
+      { id: "e4", from: "pj_data", to: "finish" },
+    ],
+    positions: {
+      welcome: { x: 350, y: 50 },
+      pf_data: { x: 100, y: 250 },
+      pj_data: { x: 600, y: 250 },
+      finish: { x: 350, y: 450 },
+    },
+  },
+];
